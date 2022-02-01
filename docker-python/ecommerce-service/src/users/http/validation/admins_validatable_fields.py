@@ -6,13 +6,9 @@
 # en este último los campos son opcionales, y en algunos casos algunos campos
 # podrían sólo definirse en la creación pero no permitir su actualización.
 
-USER_CREATION_VALIDATABLE_FIELDS = {
+ADMIN_CREATION_VALIDATABLE_FIELDS = {
 
     "username": {
-        "required": True,
-        "type": "string",
-    },
-    "email": {
         "required": True,
         "type": "string",
     },
@@ -20,24 +16,22 @@ USER_CREATION_VALIDATABLE_FIELDS = {
         "required": True,
         "type": "string",
     },
-
     "last_name": {
         "required": True,
         "type": "string",
     },
-
-    "password": {
+    "email": {
         "required": True,
         "type": "string",
     },
-    "shipping_address": {
+    "password": {
         "required": True,
         "type": "string",
     },
 
 }
 
-USER_UPDATE_VALIDATABLE_FIELDS = {
+ADMIN_UPDATE_VALIDATABLE_FIELDS = {
    
     "username": {
         "required": True,
@@ -45,10 +39,6 @@ USER_UPDATE_VALIDATABLE_FIELDS = {
     },
 
     "password": {
-        "required": True,
-        "type": "string",
-    },
-    "shipping_address": {
         "required": True,
         "type": "string",
     },
