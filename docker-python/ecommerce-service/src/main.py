@@ -3,10 +3,16 @@ from src.frameworks.db.redis import create_redis_client
 from src.frameworks.db.sqlalchemy import SQLAlchemyClient
 from src.frameworks.http.flask import create_flask_app
 
+#books
 from src.books.http.books_blueprint import create_books_blueprint
 from src.books.repositories.firestore_books_repository import FirestoreBooksRepository
 from src.books.repositories.sqlalchemy_books_repository import SQLAlchemyBooksRepository
 from src.books.usecases.manage_books_usecase import ManageBooksUsecase
+
+#users
+from src.users.http.users_blueprint import create_users_blueprint
+from src.users.repositories.sqlalchemy_users_repository import SQLAlchemyUsersRepository
+from src.users.usecases.manage_users_usecase import ManageUsersUsecase
 
 from src.greeting.http.greeting_blueprint import create_greeting_blueprint
 from src.greeting.repositories.redis_greeting_cache import RedisGreetingCache
@@ -28,12 +34,18 @@ sqlalchemy_client = SQLAlchemyClient()
 sqlalchemy_books_repository = SQLAlchemyBooksRepository(sqlalchemy_client)
 sqlalchemy_client.create_tables()
 
+#users
+sqlalchemy_users_repository = SQLAlchemyUsersRepository(sqlalchemy_client)
+sqlalchemy_client.create_tables()
+
 greeting_usecase = GreetingUsecase(redis_greeting_cache)
 # manage_books_usecase = ManageBooksUsecase(firestore_books_repository)
 manage_books_usecase = ManageBooksUsecase(sqlalchemy_books_repository)
+manage_users_usecase = ManageUsersUsecase(sqlalchemy_users_repository)
 
 blueprints = [
     create_books_blueprint(manage_books_usecase),
+    create_users_blueprint(manage_users_usecase),
     create_greeting_blueprint(greeting_usecase),
 ]
 

@@ -1,10 +1,11 @@
 from flask import Blueprint, request
+from sqlalchemy import exc
 
 from enviame.inputvalidation import validate_schema_flask, SUCCESS_CODE, FAIL_CODE
 
-from src.books.http.validation import book_validatable_fields
+from src.users.http.validation import users_validatable_fields
 
-# Endpoints para CRUD de libros.
+# Endpoints para CRUD de usuarios.
 
 # Sólo se encarga de recibir las llamadas HTTP y le entrega los datos
 # relevantes a los casos de uso correspondientes. Esta capa no debe
@@ -16,22 +17,22 @@ from src.books.http.validation import book_validatable_fields
 # en el archivo "book_validatable_fields". No sólo valida que todos los campos
 # requeridos vengan en el payload, sino que también que no vengan campos de más.
 
-def create_books_blueprint(manage_books_usecase):
+def create_users_blueprint(manage_users_usecase):
 
-    blueprint = Blueprint("books", __name__)
+    blueprint = Blueprint("users", __name__)
 
-    @blueprint.route("/books", methods = ["GET"])
-    def get_books():
+    @blueprint.route("/users", methods = ["GET"])
+    def get_users():
 
-        books = manage_books_usecase.get_books()
+        users = manage_users_usecase.get_users()
 
-        books_dict = []
-        for book in books:
-            books_dict.append(book.serialize())
+        users_dict = []
+        for user in users:
+            users_dict.append(user.serialize())
 
-        data = books_dict
+        data = users_dict
         code = SUCCESS_CODE
-        message = "Books obtenidos exitosamente"
+        message = "Users obtained succesfully"
         http_code = 200
 
         response = {
@@ -42,21 +43,21 @@ def create_books_blueprint(manage_books_usecase):
         
         return response, http_code
 
-    @blueprint.route("/books/<string:book_id>", methods = ["GET"])
-    def get_book(book_id):
+    @blueprint.route("/users/<string:user_id>", methods = ["GET"])
+    def get_user(user_id):
 
-        book = manage_books_usecase.get_book(book_id)
+        user = manage_users_usecase.get_user(user_id)
 
-        if book:
-            data = book.serialize()
+        if user:
+            data = user.serialize()
             code = SUCCESS_CODE
-            message = "Book obtenidos exitosamente"
+            message = "User obtained succesfully"
             http_code = 200
 
         else:
             data = None
             code = FAIL_CODE
-            message = f"Book of ID {book_id} no existe."
+            message = f"User of ID {user_id} does not exist."
             http_code = 404
 
         response = {
@@ -69,24 +70,38 @@ def create_books_blueprint(manage_books_usecase):
         
         return response, http_code
 
-    @blueprint.route("/books", methods = ["POST"])
-    @validate_schema_flask(book_validatable_fields.BOOK_CREATION_VALIDATABLE_FIELDS)
-    def create_book():
+    @blueprint.route("/users", methods = ["POST"])
+    @validate_schema_flask(users_validatable_fields.USER_CREATION_VALIDATABLE_FIELDS)
+    def create_user():
 
         body = request.get_json()
 
         try:
-            book = manage_books_usecase.create_book(body)
-            data = book.serialize()
+            user = manage_users_usecase.create_user(body)
+            data = user.serialize()
+            
             code = SUCCESS_CODE
-            message = "Book creados exitosamente"
+            message = "User created succesfully"
             http_code = 201
+
 
         except ValueError as e:
             data = None
             code = FAIL_CODE
             message = str(e)
             http_code = 400
+
+        except exc.IntegrityError as e:
+            e_str= str(e)
+
+            msg_start_pos = e_str.find('"')
+            msg_end_pos = e_str.rfind('"')
+            msg= e_str[msg_start_pos+1:msg_end_pos]
+
+            data = None
+            code = FAIL_CODE
+            message = msg
+            http_code = 409
 
         response = {
             "code": code,
@@ -98,16 +113,16 @@ def create_books_blueprint(manage_books_usecase):
 
         return response, http_code
 
-    @blueprint.route("/books/<string:book_id>", methods = ["PUT"])
-    @validate_schema_flask(book_validatable_fields.BOOK_UPDATE_VALIDATABLE_FIELDS)
-    def update_book(book_id):
+    @blueprint.route("/users/<string:user_id>", methods = ["PUT"])
+    @validate_schema_flask(users_validatable_fields.USER_UPDATE_VALIDATABLE_FIELDS)
+    def update_user(user_id):
 
         body = request.get_json()
 
         try:
-            book = manage_books_usecase.update_book(book_id, body)
-            data = book.serialize()
-            message = "Book updated succesfully"
+            user = manage_users_usecase.update_user(user_id, body)
+            data = user.serialize()
+            message = "User updated succesfully"
             code = SUCCESS_CODE
             http_code = 200
 
@@ -127,13 +142,13 @@ def create_books_blueprint(manage_books_usecase):
 
         return response, http_code
 
-    @blueprint.route("/books/<string:book_id>", methods = ["DELETE"])
-    def delete_book(book_id):
+    @blueprint.route("/users/<string:user_id>", methods = ["DELETE"])
+    def delete_user(user_id):
 
         try:
-            manage_books_usecase.delete_book(book_id)
+            manage_users_usecase.delete_user(user_id)
             code = SUCCESS_CODE
-            message = f"Book of ID {book_id} deleted succesfully."
+            message = f"User of ID {user_id} deleted succesfully."
             http_code = 200
 
         except ValueError as e:

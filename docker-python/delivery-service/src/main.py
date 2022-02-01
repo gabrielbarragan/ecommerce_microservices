@@ -29,8 +29,8 @@ sqlalchemy_books_repository = SQLAlchemyBooksRepository(sqlalchemy_client)
 sqlalchemy_client.create_tables()
 
 greeting_usecase = GreetingUsecase(redis_greeting_cache)
-manage_books_usecase = ManageBooksUsecase(firestore_books_repository)
-# manage_books_usecase = ManageBooksUsecase(sqlalchemy_books_repository)
+#manage_books_usecase = ManageBooksUsecase(firestore_books_repository)
+manage_books_usecase = ManageBooksUsecase(sqlalchemy_books_repository)
 
 blueprints = [
     create_books_blueprint(manage_books_usecase),
