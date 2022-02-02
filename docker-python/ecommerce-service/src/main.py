@@ -19,6 +19,11 @@ from src.users.http.sellers_blueprint import create_sellers_blueprint
 from src.users.repositories.sqlalchemy_sellers_repository import SQLAlchemySellersRepository
 from src.users.usecases.manage_sellers_usecase import ManageSellersUsecase
 
+#products
+from src.products.http.products_blueprint import create_products_blueprint
+from src.products.repositories.sqlalchemy_products_repository import SQLAlchemyProductsRepository
+from src.products.usecases.manage_products_usecase import ManageProductsUsecase
+
 from src.greeting.http.greeting_blueprint import create_greeting_blueprint
 from src.greeting.repositories.redis_greeting_cache import RedisGreetingCache
 from src.greeting.usecases.greeting_usecase import GreetingUsecase
@@ -47,16 +52,22 @@ sqlalchemy_client.create_tables()
 sqlalchemy_sellers_repository = SQLAlchemySellersRepository(sqlalchemy_client)
 sqlalchemy_client.create_tables()
 
+#products
+sqlalchemy_products_repository = SQLAlchemyProductsRepository(sqlalchemy_client)
+sqlalchemy_client.create_tables()
+
 greeting_usecase = GreetingUsecase(redis_greeting_cache)
 # manage_books_usecase = ManageBooksUsecase(firestore_books_repository)
 manage_books_usecase = ManageBooksUsecase(sqlalchemy_books_repository)
 manage_users_usecase = ManageUsersUsecase(sqlalchemy_users_repository)
 manage_sellers_usecase = ManageSellersUsecase(sqlalchemy_sellers_repository)
+manage_products_usecase = ManageProductsUsecase(sqlalchemy_products_repository)
 
 blueprints = [
     create_books_blueprint(manage_books_usecase),
     create_users_blueprint(manage_users_usecase),
     create_sellers_blueprint(manage_sellers_usecase),
+    create_products_blueprint(manage_products_usecase),
     create_greeting_blueprint(greeting_usecase),
 ]
 

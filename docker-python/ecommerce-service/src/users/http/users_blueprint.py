@@ -1,5 +1,7 @@
+
 from flask import Blueprint, request
 from sqlalchemy import exc
+import hashlib
 
 from enviame.inputvalidation import validate_schema_flask, SUCCESS_CODE, FAIL_CODE
 
@@ -75,6 +77,7 @@ def create_users_blueprint(manage_users_usecase):
     def create_user():
 
         body = request.get_json()
+        body['password']= hashlib.md5(str(body['password']).encode('utf-8')).hexdigest()
 
         try:
             user = manage_users_usecase.create_user(body)
@@ -118,6 +121,8 @@ def create_users_blueprint(manage_users_usecase):
     def update_user(user_id):
 
         body = request.get_json()
+        body['password']= hashlib.md5(str(body['password']).encode('utf-8')).hexdigest()
+        print(body)
 
         try:
             user = manage_users_usecase.update_user(user_id, body)

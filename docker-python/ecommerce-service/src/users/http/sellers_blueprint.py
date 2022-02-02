@@ -21,7 +21,7 @@ def create_sellers_blueprint(manage_sellers_usecase):
 
     blueprint = Blueprint("sellers", __name__)
 
-    @blueprint.route("/sellers", methods = ["GET"])
+    @blueprint.route("/admin/sellers", methods = ["GET"])
     def get_sellers():
 
         sellers = manage_sellers_usecase.get_sellers()
@@ -70,7 +70,7 @@ def create_sellers_blueprint(manage_sellers_usecase):
         
         return response, http_code
 
-    @blueprint.route("/sellers", methods = ["POST"])
+    @blueprint.route("/admin/sellers", methods = ["POST"])
     @validate_schema_flask(sellers_validatable_fields.SELLER_CREATION_VALIDATABLE_FIELDS)
     def create_seller():
 
@@ -142,7 +142,7 @@ def create_sellers_blueprint(manage_sellers_usecase):
 
         return response, http_code
 
-    @blueprint.route("/sellers/<string:seller_id>", methods = ["DELETE"])
+    @blueprint.route("/admin/sellers/<string:seller_id>", methods = ["DELETE"])
     def delete_seller(seller_id):
 
         try:

@@ -35,12 +35,14 @@ class SQLAlchemySellersRepository():
             Column("description", String(100)),
             Column("store_address", String(100)),
 
+
             Column("created_at", TIMESTAMP),
             Column("updated_at", TIMESTAMP),
             Column("deleted_at", TIMESTAMP, nullable = True),
         )
 
         sqlalchemy_client.mapper_registry.map_imperatively(Seller, self.sellers_table)
+    
 
     def get_sellers(self):
         

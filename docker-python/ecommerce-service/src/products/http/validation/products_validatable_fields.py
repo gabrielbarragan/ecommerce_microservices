@@ -6,17 +6,13 @@
 # en este último los campos son opcionales, y en algunos casos algunos campos
 # podrían sólo definirse en la creación pero no permitir su actualización.
 
-SELLER_CREATION_VALIDATABLE_FIELDS = {
+PRODUCT_CREATION_VALIDATABLE_FIELDS = {
 
-    "username": {
+    "sku": {
         "required": True,
         "type": "string",
     },
-    "first_name": {
-        "required": True,
-        "type": "string",
-    },
-    "last_name": {
+    "product_name": {
         "required": True,
         "type": "string",
     },
@@ -24,19 +20,15 @@ SELLER_CREATION_VALIDATABLE_FIELDS = {
         "required": True,
         "type": "string",
     },
-    "email": {
-        "required": True,
-        "type": "string",
-    },
 
-    "password": {
+    "quantity": {
         "required": True,
-        "type": "string",
+        "type": "integer",
     },
 
 }
 
-SELLER_UPDATE_VALIDATABLE_FIELDS = {
+PRODUCT_UPDATE_VALIDATABLE_FIELDS = {
    
     "username": {
         "required": False,
@@ -47,8 +39,8 @@ SELLER_UPDATE_VALIDATABLE_FIELDS = {
         "required": False,
         "type": "string",
     },
-    "store_address": {
-        "required": True,
+    "shipping_address": {
+        "required": False,
         "type": "string",
     },
 

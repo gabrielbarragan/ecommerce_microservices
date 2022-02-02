@@ -1,5 +1,5 @@
-from sqlalchemy import Table, Column, Integer, String, ForeignKey, TIMESTAMP
 
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, TIMESTAMP
 
 from src.users.entities.user import User
     

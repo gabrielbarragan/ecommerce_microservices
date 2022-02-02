@@ -40,16 +40,16 @@ USER_CREATION_VALIDATABLE_FIELDS = {
 USER_UPDATE_VALIDATABLE_FIELDS = {
    
     "username": {
-        "required": True,
+        "required": False,
         "type": "string",
     },
 
     "password": {
-        "required": True,
+        "required": False,
         "type": "string",
     },
     "shipping_address": {
-        "required": True,
+        "required": False,
         "type": "string",
     },
 
