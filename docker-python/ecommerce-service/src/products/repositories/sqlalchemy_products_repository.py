@@ -80,11 +80,12 @@ class SQLAlchemyProductsRepository():
             
             return products
 
-    def get_product(self, id):
+    def get_product(self, seller_id, product_sku):
         
         with self.session_factory() as session:
+            
+            product = session.query(Product).filter_by(sku = product_sku, seller_id= seller_id, deleted_at = None).first()
 
-            product = session.query(Product).filter_by(id = id, deleted_at = None).first()
             return product
 
     def create_product(self, product):
@@ -94,17 +95,17 @@ class SQLAlchemyProductsRepository():
             session.commit()
         return product
 
-    def update_product(self, id, fields):
+    def update_product(self, seller_id, product_sku, fields):
 
         # Actualiza sólo los campos de la lista "fields" en el usuario especificado.
         # Luego retorna el producto con los nuevos datos.
         
         with self.session_factory() as session:
 
-            session.query(Product).filter_by(id = id, deleted_at = None).update(fields)
+            session.query(Product).filter_by(sku = product_sku, seller_id= seller_id, deleted_at = None).update(fields)
             session.commit()
             
-            product = session.query(Product).filter_by(id = id, deleted_at = None).first()
+            product = session.query(Product).filter_by(sku = product_sku, deleted_at = None).first()
             return product
 
     def hard_delete_product(self, id):

@@ -4,7 +4,7 @@ from sqlalchemy import exc
 from enviame.inputvalidation import validate_schema_flask, SUCCESS_CODE, FAIL_CODE
 
 from src.products.http.validation import products_validatable_fields
-from src.users.repositories.sqlalchemy_sellers_repository import SQLAlchemySellersRepository
+
 
 # Endpoints para CRUD de usuarios.
 
@@ -21,6 +21,40 @@ from src.users.repositories.sqlalchemy_sellers_repository import SQLAlchemySelle
 def create_products_blueprint(manage_products_usecase):
 
     blueprint = Blueprint("products", __name__)
+
+    @blueprint.route("/products", methods = ["GET"])
+    def get_all_products():
+        """Endpoint for show all products to the users 
+           No parameters"""
+
+        products = manage_products_usecase.get_all_products()
+        
+        products_dict = []
+
+
+        if products:
+
+            for product in products:
+                products_dict.append(product.serialize())
+
+            data = products_dict
+            code = SUCCESS_CODE
+            message = "Products obtained succesfully"
+            http_code = 200
+
+        else:
+            data = None
+            code = FAIL_CODE
+            message = "No products finded"
+            http_code = 400
+
+        response = {
+            "code": code,
+            "message": message,
+            "data": data,
+        }
+        
+        return response, http_code
 
     @blueprint.route("/seller/<string:seller_id>/products", methods = ["GET"])
     def get_products(seller_id):
@@ -59,31 +93,24 @@ def create_products_blueprint(manage_products_usecase):
         }
         
         return response, http_code
-    @blueprint.route("/products", methods = ["GET"])
-    def get_all_products():
-        """Endpoint for show all products to the users 
-           No parameters"""
+    @blueprint.route("/seller/<string:seller_id>/products/<string:product_sku>", methods = ["GET"])
+    def get_product(seller_id, product_sku):
+        """Endpoint for show all products of an specific seller and product id"""
 
-        products = manage_products_usecase.get_all_products()
+        product= manage_products_usecase.get_product(seller_id, product_sku)
         
-        products_dict = []
 
-
-        if products:
-
-            for product in products:
-                products_dict.append(product.serialize())
-
-            data = products_dict
+        if product:
+            data = product.serialize()
             code = SUCCESS_CODE
-            message = "Products obtained succesfully"
+            message = "Product obtained succesfully"
             http_code = 200
 
         else:
             data = None
             code = FAIL_CODE
-            message = "No products finded"
-            http_code = 400
+            message = "Product  doesn't exists"
+            http_code = 400    
 
         response = {
             "code": code,
@@ -91,6 +118,79 @@ def create_products_blueprint(manage_products_usecase):
             "data": data,
         }
         
+        return response, http_code
+        
+    
+    @blueprint.route("/seller/<string:seller_id>/products", methods = ["POST"])
+    @validate_schema_flask(products_validatable_fields.PRODUCT_CREATION_VALIDATABLE_FIELDS)
+    def create_product(seller_id):
+
+        body = request.get_json()
+        print(body)
+        try:
+            user = manage_products_usecase.create_product(body, seller_id)
+            data = user.serialize()
+            
+            code = SUCCESS_CODE
+            message = "Product created succesfully"
+            http_code = 201
+
+        except ValueError as e:
+            data = None
+            code = FAIL_CODE
+            message = str(e)
+            http_code = 400
+
+        except exc.IntegrityError as e:
+            e_str= str(e)
+
+            msg_start_pos = e_str.find('"')
+            msg_end_pos = e_str.rfind('"')
+            msg= e_str[msg_start_pos+1:msg_end_pos]
+
+            data = None
+            code = FAIL_CODE
+            message = msg
+            http_code = 409
+
+        response = {
+            "code": code,
+            "message": message,
+        }
+
+        if data:
+            response["data"] = data
+
+        return response, http_code
+        
+
+    @blueprint.route("/seller/<string:seller_id>/products/<string:product_sku>", methods = ["PUT"])
+    @validate_schema_flask(products_validatable_fields.PRODUCT_UPDATE_VALIDATABLE_FIELDS)
+    def update_product(seller_id, product_sku):
+
+        body = request.get_json()
+
+        try:
+            product = manage_products_usecase.update_product(seller_id,product_sku, body)
+            data = product.serialize()
+            message = "Product updated succesfully"
+            code = SUCCESS_CODE
+            http_code = 200
+
+        except ValueError as e:
+            data = None
+            code = FAIL_CODE
+            message = str(e)
+            http_code = 400
+
+        response = {
+            "code": code,
+            "message": message,
+        }
+
+        if data:
+            response["data"] = data
+
         return response, http_code
 
 

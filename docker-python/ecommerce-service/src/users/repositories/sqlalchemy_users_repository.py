@@ -55,7 +55,7 @@ class SQLAlchemyUsersRepository():
             user = session.query(User).filter_by(id = id, deleted_at = None).first()
             return user
 
-    def create_user(self, user, email):
+    def create_user(self, user):
 
         with self.session_factory() as session:
             session.add(user)

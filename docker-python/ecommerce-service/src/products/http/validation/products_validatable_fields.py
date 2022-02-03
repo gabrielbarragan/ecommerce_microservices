@@ -30,18 +30,18 @@ PRODUCT_CREATION_VALIDATABLE_FIELDS = {
 
 PRODUCT_UPDATE_VALIDATABLE_FIELDS = {
    
-    "username": {
+    "product_name": {
         "required": False,
         "type": "string",
     },
 
-    "password": {
+    "description": {
         "required": False,
         "type": "string",
     },
-    "shipping_address": {
+    "quantity": {
         "required": False,
-        "type": "string",
+        "type": "integer",
     },
 
 }

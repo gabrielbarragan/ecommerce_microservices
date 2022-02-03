@@ -121,8 +121,8 @@ def create_users_blueprint(manage_users_usecase):
     def update_user(user_id):
 
         body = request.get_json()
-        body['password']= hashlib.md5(str(body['password']).encode('utf-8')).hexdigest()
-        print(body)
+        if body['password']:
+            body['password']= hashlib.md5(str(body['password']).encode('utf-8')).hexdigest()
 
         try:
             user = manage_users_usecase.update_user(user_id, body)
