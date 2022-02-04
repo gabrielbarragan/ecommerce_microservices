@@ -57,7 +57,7 @@ Repository tests write data to container databases, but write them to temporary 
 
 ### Crear un usuario:
 POST http://localhost:8000/users
-
+```
 {
             "username": "Leodavinci",
             "email": "Davinci@renacimiento.com",
@@ -66,7 +66,7 @@ POST http://localhost:8000/users
             "password": "Leo.2022",
             "shipping_address": "Florencia"
 }
-
+```
 ### Obtener todos los usuarios:
 GET http://localhost:8000/users
 
@@ -75,20 +75,20 @@ GET http://localhost:8000/users/1
 
 ### Actualizar un usuario:
 PUT http://localhost:8000/users/1
-
+```
 {
             "password": "Leo.200000",
             "shipping_address":"Florencia calle 2"
 
 }
-
+```
 ### Borrar un usuario
 DEL http://localhost:8000/users/1
 
 
 ### Crear un vendedor:
 POST http://localhost:8000/admin/sellers
-
+```
 {
             "username": "Niko",
             "email": "Niko@niko.com",
@@ -97,7 +97,7 @@ POST http://localhost:8000/admin/sellers
             "password": "Niko.202222",
             "description": "El mejor vendedor"
 }
-
+```
 ### Obtener todos los vendedores:
 GET http://localhost:8000/admin/sellers
 
@@ -107,12 +107,12 @@ GET http://localhost:8000/sellers/1
 
 ### Actualizar un vendedor:
 PUT http://localhost:8000/sellers/1
-
+```
 {
         "store_address": "mega l43"
 
 }
-
+```
 ### Borrar un vendedor:
 DEL http://localhost:8000/admin/sellers/1
 
@@ -120,14 +120,14 @@ DEL http://localhost:8000/admin/sellers/1
 
 ### Crear un producto:
 POST http://localhost:8000/seller/1/products
-
+```
 {
             "sku": "sku0001",
             "product_name": "Golosinas",
             "description": "Golosinas deliciosas",
             "quantity": 20
 }
-
+```
 ### Obtener todos los productos de un vendedor (requiere que la store_address no esté vacía):
 GET http://localhost:8000/seller/1/products
 
@@ -139,12 +139,14 @@ GET http://localhost:8000/seller/1/products/sku0001
 
 ### Actualizar un product:
 PUT http://localhost:8000/seller/1/products/sku0002
+```
 {
             "product_name":"Caramelos",
             "description": "Deliciosos caramelos",
             "quantity":7
 
 }
+```
 
 ### Borrar un producto
 DEL http://localhost:8000/seller/1/products/sku0002
