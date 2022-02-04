@@ -135,11 +135,11 @@ def create_products_blueprint(manage_products_usecase):
         returns http response in json, fail or success code and message"""
 
         body = request.get_json()
-        print(body)
-        try:
-            user = manage_products_usecase.create_product(body, seller_id)
-            data = user.serialize()
             
+        try:
+
+            product = manage_products_usecase.create_product(body, seller_id)
+            data = product.serialize()
             code = SUCCESS_CODE
             message = "Product created succesfully"
             http_code = 201
@@ -160,6 +160,12 @@ def create_products_blueprint(manage_products_usecase):
             data = None
             code = FAIL_CODE
             message = msg
+            http_code = 409
+            
+        except AttributeError:
+            data = None
+            code = FAIL_CODE
+            message = f"No existe vendedor con id {seller_id}"
             http_code = 409
 
         response = {

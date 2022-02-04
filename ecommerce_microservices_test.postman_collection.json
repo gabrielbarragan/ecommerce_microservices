@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "22f4d9ba-12ec-44e9-804b-bb70a8cf3c53",
+		"name": "ecommerce_microservices_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create_ECOMMERCE_USERS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"username\": \"Nikelosso\",\r\n            \"email\": \"Nik@gmail.com\",\r\n            \"first_name\": \"Nikola\",\r\n            \"last_name\": \"Jordan Nazario\",\r\n            \"password\": \"Nik2022\",\r\n            \"shipping_address\": \"calle 9N #0w-45\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/users",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_ECOMMERCE_SELLERS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{           \r\n            \"username\": \"Juanchito\",\r\n            \"email\": \"Juancho@gmail.com\",\r\n            \"first_name\": \"Juan\",\r\n            \"last_name\": \"Redondo\",\r\n            \"password\": \"Juan021\",\r\n            \"description\": \"El mejor vendedor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/admin/sellers",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"admin",
+						"sellers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_ECOMMERCE_PRODUCTS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"sku\": \"sku0003\",\r\n            \"product_name\": \"Golosinas\",\r\n            \"description\": \"Golosinas deliciosas\",\r\n            \"quantity\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/1/products",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_USERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/users",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_USERS_ONE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/users/1",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_SELLERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/sellers/1",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_PRODUCTS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/1/products",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_ALLPRODUCTS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/products",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list_ECOMMERCE_ONE_PRODUCT",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/1/products/sku0003",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"1",
+						"products",
+						"sku0003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_ECOMMERCE_SELLERS",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n            \"store_address\": \"mega local 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/sellers/1",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_ECOMMERCE_USERS",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"password\": \"NIKi200000\",\r\n            \"shipping_address\":\"Florida piso1\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/users/3",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_ECOMMERCE_PRODUCTS",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \r\n            \"quantity\":30\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/1/products/sku0003",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"1",
+						"products",
+						"sku0003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ECOMMERCE_USERS",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/users/1",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ECOMMERCE_SELLERS",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/admin/sellers/1",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"admin",
+						"sellers",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ECOMMERCE_SELLERS Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/1/products/sku0003",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"1",
+						"products",
+						"sku0003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_ECOMMERCE_PRODUCTS Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \r\n            \"quantity\":7\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST_ECOMMERCE}}/seller/3/products/sku002",
+					"host": [
+						"{{HOST_ECOMMERCE}}"
+					],
+					"path": [
+						"seller",
+						"3",
+						"products",
+						"sku002"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST_DELIVERY",
+			"value": "http://127.0.0.1:8001"
+		},
+		{
+			"key": "HOST_ECOMMERCE",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}

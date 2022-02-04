@@ -34,7 +34,7 @@ class ManageUsersUsecase:
         data["updated_at"] = current_time
 
         user = User.from_dict(data)
-        user = self.users_repository.create_user(user,data["email"])
+        user = self.users_repository.create_user(user)
 
         return user
 

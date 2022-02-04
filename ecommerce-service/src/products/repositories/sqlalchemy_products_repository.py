@@ -88,9 +88,12 @@ class SQLAlchemyProductsRepository():
 
             return product
 
-    def create_product(self, product):
-
+    def create_product(self, product, seller_id):
+        print(seller_id)
         with self.session_factory() as session:
+            query=session.query(Seller.id).filter(Seller.id == int(seller_id), Seller.store_address != None, Seller.deleted_at == None).all()
+            if not query:
+                return None
             session.add(product)
             session.commit()
         return product

@@ -1,31 +1,96 @@
-### Saludo.
-GET http://localhost:8000/greeting
 
-### Obtener todos los libros.
-GET http://localhost:8000/books
 
-### Obtener libro por ID.
-GET http://localhost:8000/books/gIIQnRJzmonQ4WgUqEZq
-
-### Crear libro.
-POST http://localhost:8000/books
-Content-Type: application/json
+### Crear un usuario:
+POST http://localhost:8000/users
 
 {
-    "title": "Mi nuevo libro",
-    "author": "Hans A.C.",
-    "pages": 100
+            "username": "Leodavinci",
+            "email": "Davinci@renacimiento.com",
+            "first_name": "Leonardo",
+            "last_name": "Davinci",
+            "password": "Leo.2022",
+            "shipping_address": "Florencia"
 }
 
-### Actualizar libro.
-PUT http://localhost:8000/books/gIIQnRJzmonQ4WgUqEZq
-Content-Type: application/json
+### Obtener todos los usuarios:
+GET http://localhost:8000/users
+
+### Obtener un usuario por id:
+GET http://localhost:8000/users/1
+
+### Actualizar un usuario:
+PUT http://localhost:8000/users/1
 
 {
-    "title": "Mi nuevo libro (edición 2)",
-    "author": "Hans A.C.",
-    "pages": 110
+            "password": "Leo.200000",
+            "shipping_address":"Florencia calle 2"
+
 }
 
-### Borrar libro.
-DELETE http://localhost:8000/books/gIIQnRJzmonQ4WgUqEZq
+### Borrar un usuario
+DEL http://localhost:8000/users/1
+
+
+### Crear un vendedor:
+POST http://localhost:8000/admin/sellers
+
+{
+            "username": "Niko",
+            "email": "Niko@niko.com",
+            "first_name": "Nikoleto",
+            "last_name": "Marci",
+            "password": "Niko.202222",
+            "description": "El mejor vendedor"
+}
+
+### Obtener todos los vendedores:
+GET http://localhost:8000/admin/sellers
+
+
+### Obtener un vendedor por id:
+GET http://localhost:8000/sellers/1
+
+### Actualizar un vendedor:
+PUT http://localhost:8000/sellers/1
+
+{
+        "store_address": "mega l43"
+
+}
+
+### Borrar un vendedor:
+DEL http://localhost:8000/admin/sellers/1
+
+
+
+### Crear un producto:
+POST http://localhost:8000/seller/1/products
+
+{
+            "sku": "sku0001",
+            "product_name": "Golosinas",
+            "description": "Golosinas deliciosas",
+            "quantity": 20
+}
+
+### Obtener todos los productos de un vendedor (requiere que la store_address no esté vacía):
+GET http://localhost:8000/seller/1/products
+
+### Obtener todos los productos:
+GET http://localhost:8000/products
+
+### Obtener un producto por sku:
+GET http://localhost:8000/seller/1/products/sku0001
+
+### Actualizar un product:
+PUT http://localhost:8000/seller/1/products/sku0002
+{
+            "product_name":"Caramelos",
+            "description": "Deliciosos caramelos",
+            "quantity":7
+
+}
+
+### Borrar un producto
+DEL http://localhost:8000/seller/1/products/sku0002
+

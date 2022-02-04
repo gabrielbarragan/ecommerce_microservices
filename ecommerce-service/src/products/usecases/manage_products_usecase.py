@@ -41,7 +41,7 @@ class ManageProductsUsecase:
         data["seller_id"]  = seller_id
 
         product = Product.from_dict(data)
-        product = self.products_repository.create_product(product)
+        product = self.products_repository.create_product(product, seller_id)
 
         return product
     
