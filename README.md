@@ -42,7 +42,7 @@ The Flask application will probably throw an exception the first time, because i
 
 To run manual tests, the examples are in `req.http` file is included with requests to localhost. 
 
-To tests into **Postman**, import file **["ecommerce_microservices_test.postman_collection.json"]**(https://github.com/gabrielbarragan/ecommerce_microservices/blob/main/ecommerce_microservices_test.postman_collection.json) in postman app. There you will find test data and available endpoints.
+To tests into **Postman**, import file **["ecommerce_microservices_test.postman_collection.json"](https://github.com/gabrielbarragan/ecommerce_microservices/blob/main/ecommerce_microservices_test.postman_collection.json)** in postman app. There you will find test data and available endpoints.
 
 To run the tests:
 
