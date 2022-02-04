@@ -108,11 +108,11 @@ class SQLAlchemyProductsRepository():
             product = session.query(Product).filter_by(sku = product_sku, deleted_at = None).first()
             return product
 
-    def hard_delete_product(self, id):
+    def hard_delete_product(self, seller_id, product_sku):
 
         with self.session_factory() as session:
 
-            product = session.query(Product).get(id)
+            product = session.query(Product).get({"sku": product_sku, "seller_id": seller_id})
             session.delete(product)
             session.commit()
 

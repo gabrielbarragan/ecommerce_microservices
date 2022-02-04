@@ -25,7 +25,8 @@ def create_products_blueprint(manage_products_usecase):
     @blueprint.route("/products", methods = ["GET"])
     def get_all_products():
         """Endpoint for show all products to the users 
-           No parameters"""
+           No parameters
+           returns """
 
         products = manage_products_usecase.get_all_products()
         
@@ -58,7 +59,9 @@ def create_products_blueprint(manage_products_usecase):
 
     @blueprint.route("/seller/<string:seller_id>/products", methods = ["GET"])
     def get_products(seller_id):
-        """Endpoint for show all products of an specific seller"""
+        """Endpoint for show all products of an specific seller
+            Parameters: seller_id
+            returns http response in json, fail or success code and message"""
 
         products, seller = manage_products_usecase.get_products(seller_id)
         
@@ -95,7 +98,9 @@ def create_products_blueprint(manage_products_usecase):
         return response, http_code
     @blueprint.route("/seller/<string:seller_id>/products/<string:product_sku>", methods = ["GET"])
     def get_product(seller_id, product_sku):
-        """Endpoint for show all products of an specific seller and product id"""
+        """Endpoint for show a product of an specific seller indicating the sku of product
+        Parameters: seller_id, and product_sky
+        returns http response in json, fail or success code and message"""
 
         product= manage_products_usecase.get_product(seller_id, product_sku)
         
@@ -124,6 +129,10 @@ def create_products_blueprint(manage_products_usecase):
     @blueprint.route("/seller/<string:seller_id>/products", methods = ["POST"])
     @validate_schema_flask(products_validatable_fields.PRODUCT_CREATION_VALIDATABLE_FIELDS)
     def create_product(seller_id):
+
+        """Endpoint for create a product by an specific seller 
+        parameters: seller_id
+        returns http response in json, fail or success code and message"""
 
         body = request.get_json()
         print(body)
@@ -167,6 +176,9 @@ def create_products_blueprint(manage_products_usecase):
     @blueprint.route("/seller/<string:seller_id>/products/<string:product_sku>", methods = ["PUT"])
     @validate_schema_flask(products_validatable_fields.PRODUCT_UPDATE_VALIDATABLE_FIELDS)
     def update_product(seller_id, product_sku):
+        """Endpoint for update a product by an specific seller and product sku
+        parameters: seller_id, product_sku
+        returns http response in json, fail or success code and message"""
 
         body = request.get_json()
 
@@ -190,6 +202,27 @@ def create_products_blueprint(manage_products_usecase):
 
         if data:
             response["data"] = data
+
+        return response, http_code
+    
+    @blueprint.route("/seller/<string:seller_id>/products/<string:product_sku>", methods = ["DELETE"])
+    def delete_user(product_sku, seller_id):
+
+        try:
+            manage_products_usecase.delete_product(product_sku, seller_id)
+            code = SUCCESS_CODE
+            message = f"Product of ID {product_sku} of the seller {seller_id} deleted succesfully."
+            http_code = 200
+
+        except ValueError as e:
+            code = FAIL_CODE
+            message = str(e)
+            http_code = 400
+
+        response = {
+            "code": code,
+            "message": message,
+        }
 
         return response, http_code
 

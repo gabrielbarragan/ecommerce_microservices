@@ -62,3 +62,21 @@ class ManageProductsUsecase:
 
         else:
             raise ValueError(f"Product of ID {product_sku} for Seller {seller_id} doesn't exist.")
+
+    def delete_product(self, product_sku, seller_id, ):
+
+        # Realiza un soft-delete del producto con la ID especificada y el sku de producto indicado, si es que existe.
+        # A nivel de repositorio realiza una actualización al campo "deleted_at".
+        
+        user = self.get_product(seller_id, product_sku)
+
+        if user:
+
+            data = {
+                "deleted_at": utils.get_current_datetime()
+            }
+            
+            user = self.products_repository.update_product(seller_id, product_sku, data)
+
+        else:
+            raise ValueError(f"Product of ID {product_sku} for seller {seller_id} doesn't exist or is already deleted.")
